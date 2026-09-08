@@ -18,15 +18,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Show versions
+        run: |
+          node -v
+          npm -v
+          java -version
 
       - name: Install Capacitor
         run: |
           npm init -y
-          npm install @capacitor/core @capacitor/cli @capacitor/android
+          npm install @capacitor/core@8 @capacitor/cli@8 @capacitor/android@8
 
       - name: Prepare web files
         run: |
@@ -41,14 +53,18 @@ jobs:
           npx cap init "The King - إدارة المطبعة" "com.theking.print" --web-dir www
 
       - name: Add Android
-        run: npx cap add android
+        run: |
+          npx cap add android
 
-      - name: Sync
-        run: npx cap sync android
+      - name: Sync Android
+        run: |
+          npx cap sync android
 
       - name: Build APK
         working-directory: android
-        run: ./gradlew assembleDebug
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
