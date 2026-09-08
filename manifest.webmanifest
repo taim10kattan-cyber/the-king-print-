@@ -1,0 +1,11 @@
+{
+  "name": "The King - إدارة المطبعة",
+  "short_name": "The King",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f7f8fb",
+  "theme_color": "#08152f",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": []
+}
